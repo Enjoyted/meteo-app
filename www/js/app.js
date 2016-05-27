@@ -83,14 +83,14 @@ app.controller('appController',['$scope', 'parser', '$filter', '$cordovaFileTran
 
     for (var i in data) {
 
-      var max = -1000000000;
-      var min = 1000000000;
+      var max = undefined;
+      var min = undefined;
       var avg = 0;
 
       for (var c in data[i]) {
         var value = parseFloat(data[i][c][key1]);
-        max = (max < value ? value : max);
-        min = (min > value ? value : min);
+        max = (max == undefined ? value : (max < value ? value : max));
+        min = (min == undefined ? value : (min > value ? value : min));
         avg += value;
       }
       avg = (avg / data.length);
