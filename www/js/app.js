@@ -35,8 +35,6 @@ app.controller('appController',['$scope', 'parser', 'files', '$filter', '$cordov
   $scope.selectFile = function(file) {
     $scope.fileSelected = file;
     $scope.data = JSON.parse(parser.csvToJson(parser.cleanString($scope.fileSelected.data)));
-    console.log('a', $scope.data);
-    console.log('b', $scope.getDataGraph1('AIR_TEMPERATURE'));
     $scope.changePage('graph');
     $scope.getGraph1(1, $scope.getDataGraph1('AIR_TEMPERATURE'), 'Daily Average AIR_TEMPERATURE', 'Temperature (°C)', '°C');
     $scope.getGraph1(2, $scope.getDataGraph1('REL_HUMIDITY'), 'Daily Average Humidity', 'Humidity %', '%');
@@ -62,14 +60,14 @@ app.controller('appController',['$scope', 'parser', 'files', '$filter', '$cordov
 
     for (var i in data) {
 
-      var max = undefined;
-      var min = undefined;
+      var max = null;
+      var min = null;
       var avg = 0;
 
       for (var c in data[i]) {
         var value = parseFloat(data[i][c][key1]);
-        max = (max == undefined ? value : (max < value ? value : max));
-        min = (min == undefined ? value : (min > value ? value : min));
+        max = (max === null) ? value : Math.max(max, value);//(max === undefined ? value : (max < value ? value : max));
+        min = (min === null) ? value : Math.min(min, value);//(min === undefined ? value : (min > value ? value : min));
         avg += value;
       }
       avg = (avg / data.length);
@@ -275,3 +273,4 @@ app.controller('appController',['$scope', 'parser', 'files', '$filter', '$cordov
     });
   };
 }]);
+  

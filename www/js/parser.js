@@ -1,5 +1,6 @@
 app.factory('parser', function() {
-	return _this = {
+	var _this;
+	return (_this = {
 		csvToArray: function(strData, strDelimiter) {
 			strDelimiter = (strDelimiter || ",");
 			var objPattern = new RegExp(("(\\" + strDelimiter + "|\\r?\\n|\\r|^)" + "(?:\"([^\"]*(?:\"\"[^\"]*)*)\"|" + "([^\"\\" + strDelimiter + "\\r\\n]*))"), "gi");
@@ -39,5 +40,5 @@ app.factory('parser', function() {
 			// string = string.split("\n").slice(1).join("\n");
 			return string;
 		}
-	};
+	});
 });
